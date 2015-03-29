@@ -3,13 +3,8 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title>JOJO I NELLISSERY </title>
-  <script type="text/javascript" src="../../shared/ba-debug.js"></script>
-  <script type="text/javascript" src="../../shared/jquery-1.3.2.js"></script>
-  <script type="text/javascript" src="../../shared/SyntaxHighlighter/scripts/shCore.js"></script><script type="text/javascript" src="../../shared/SyntaxHighlighter/scripts/shBrushJScript.js"></script>
-  <script type="text/javascript" src="../../shared/SyntaxHighlighter/scripts/shBrushXml.js">
-  </script>  <link rel="stylesheet" type="text/css" href="../../shared/SyntaxHighlighter/styles/shCore.css">
-  <link rel="stylesheet" type="text/css" href="../../shared/SyntaxHighlighter/styles/shThemeDefault.css">
-  <link rel="stylesheet" type="text/css" href="../index.css">
+ 
+ <link rel="stylesheet" type="text/css" href="../index.css">
 <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -23,11 +18,55 @@ $(function(){
     var proxy = '../../ba-simple-proxy.php'
 	var url = proxy + '?' + $('#params').serialize();
 	var url1= proxy + '?url=' + "http://secure.searstravel.ca/interview-test/ajax.php&full_headers=1&full_status=1";
+	arr =[];
     {
-   
+   			$('table tbody tr').not(function(){if ($(this).has('th').length){return true}}).remove();
+			$('#footer').empty();
 			
 			$.getJSON( url, function(data){
-			var tr;
+				var tr;
+			//sorting based on price 	
+				for( var key in data )
+					{
+						if( data.hasOwnProperty( key ) )
+						{
+						arr.push( data[key] );
+						}
+					}
+			
+			arr.sort
+			( 
+				function(a,b)
+				 { 
+				 if (typeof(a)!=='undefined' && typeof(a.length)!=='undefined')
+				   	{
+					a.sort( 
+							function(c,d)
+							{
+								var nameAprice=parseInt(c.price.hotelPrice);
+								var nameBPrice=parseInt(d.price.hotelPrice);
+								if (nameAprice < nameBPrice)
+									{ 
+									return -1; 
+									} 
+								else if (nameAprice > nameBPrice)
+									{ 
+									return 1
+									} 
+								else
+									{ 
+									return 0
+									}
+							}
+					    )
+					
+				  	}
+				}
+			);
+	
+	//	data=arr;	
+	//alert(arr);
+			
 			for (var i = 0; i < data["contents"].length; i++) 
 			{
 			
@@ -118,7 +157,49 @@ $(function(){
 		   
 		$.getJSON( url, function(data){
 			var tr;
-			$('table').empty();
+   			$('table tbody tr').not(function(){if ($(this).has('th').length){return true}}).remove();
+			$('#footer').empty();
+			
+			//sorting based on price 
+			for( var key in data )
+					{
+						if( data.hasOwnProperty( key ) )
+						{
+						arr.push( data[key] );
+						}
+					}
+			
+			arr.sort
+			( 
+				function(a,b)
+				 { 
+				 if (typeof(a)!=='undefined' && typeof(a.length)!=='undefined')
+				   	{
+					a.sort( 
+							function(c,d)
+							{
+								var nameAprice=parseInt(c.price.hotelPrice);
+								var nameBPrice=parseInt(d.price.hotelPrice);
+								if (nameAprice < nameBPrice)
+									{ 
+									return -1; 
+									} 
+								else if (nameAprice > nameBPrice)
+									{ 
+									return 1
+									} 
+								else
+									{ 
+									return 0
+									}
+							}
+					    )
+					
+				  	}
+				}
+			);
+			
+			
 			for (var i = 0; i < data["contents"].length; i++) 
 			{
 				if(parseInt(data["contents"][i].price.hotelPrice)>=ui.values[0]&& parseInt(data["contents"][i].price.hotelPrice)<=ui.values[1])
