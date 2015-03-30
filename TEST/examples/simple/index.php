@@ -97,7 +97,7 @@ $(function(){
 				}
 			}
 			
-			tr.append("<td>" + data["contents"][i].hotelStarUrl + "</td>");
+			tr.append("<td><img src='" + data["contents"][i].hotelStarUrl + "';  alt=#; width=50px /></td>");
 			$('table').append(tr);
 			}
 			  $.getJSON(url1, function(data){
@@ -221,7 +221,7 @@ $(function(){
 					}
 					}
 					
-					tr.append("<td>" + data["contents"][i].hotelStarUrl + "</td>");
+					tr.append("<td><img src='" + data["contents"][i].hotelStarUrl + "';  alt=#; width=50px /></td>");
 					$('table').append(tr);
 					
 				}
