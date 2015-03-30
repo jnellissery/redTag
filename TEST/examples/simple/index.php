@@ -10,14 +10,14 @@
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript" src="../../shared/json2.js"></script>
 <script type="text/javascript" language="javascript">
+    var proxy = '../../ba-simple-proxy.php'
+	var url = proxy + '?url=' +"http://secure.searstravel.ca/interview-test/index.php&full_headers=1&full_status=1";
+	var url1= proxy + '?url=' + "http://secure.searstravel.ca/interview-test/ajax.php&full_headers=1&full_status=1";
+$("#url").hide();
 
 $(function(){
-  
   // Handle form submit.
   $('#params').submit(function(){
-    var proxy = '../../ba-simple-proxy.php'
-	var url = proxy + '?' + $('#params').serialize();
-	var url1= proxy + '?url=' + "http://secure.searstravel.ca/interview-test/ajax.php&full_headers=1&full_status=1";
 	arr =[];
     {
    			$('table tbody tr').not(function(){if ($(this).has('th').length){return true}}).remove();
@@ -75,15 +75,26 @@ $(function(){
 			tr.append("<td>" + data["contents"][i].price.hotelPrice + "</td>");
 			if(data["contents"][i].price.hotelPromoPrice!="")
 			{
-			if (typeof(data["contents"][i].price.hotelPromoPrice)!== 'undefined')
-			
-			tr.append("<td>" + data["contents"][i].price.hotelPromoPrice + "</td>");
+				if (typeof(data["contents"][i].price.hotelPromoPrice)!== 'undefined')
+				{
+				tr.append("<td>" + data["contents"][i].price.hotelPromoPrice + "</td>");
+				}
+				else
+				{
+					tr.append("<td> </td>");
+				}
 			}
 			
 			if(data["contents"][i].price.hotelPromoDescription!="")
 			{
-			if (typeof(data["contents"][i].price.hotelPromoDescription)!== 'undefined')
-			tr.append("<td>" + data["contents"][i].price.hotelPromoDescription + "</td>");
+				if (typeof(data["contents"][i].price.hotelPromoDescription)!== 'undefined')
+				{
+				tr.append("<td>" + data["contents"][i].price.hotelPromoDescription + "</td>");
+				}
+				else
+				{
+					tr.append("<td> </td>");
+				}
 			}
 			
 			tr.append("<td>" + data["contents"][i].hotelStarUrl + "</td>");
@@ -103,31 +114,10 @@ $(function(){
   });
   
   // Submit the form on page load if ?url= is passed into the example page.
-  if ( $('#url').val() !== '' ) {
+ // if ( $('#url').val() !== '' )
+  {
     $('#params').submit();
   }
-  
-  // Disable AJAX caching.
-  $.ajaxSetup({ cache: false });
-  
-  // Disable dependent checkboxes as necessary.
-  $('input:radio').click(function(){
-    var that = $(this),
-      c1 = 'dependent-' + that.attr('name'),
-      c2 = c1 + '-' + that.val();
-    
-    that.closest('form')
-      .find( '.' + c1 + ' input' )
-        .attr( 'disabled', 'disabled' )
-        .end()
-      .find( '.' + c2 + ' input' )
-        .removeAttr( 'disabled' );
-  
-   
-  
-  });
-  
-
 });
 
 
@@ -150,10 +140,6 @@ $(function(){
                      .val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
                },
                slide: function( event, ui ) {
-			
-				var proxy = '../../ba-simple-proxy.php'
-				var url = proxy + '?' + $('#params').serialize();
-				var url1= proxy + '?url=' + "http://secure.searstravel.ca/interview-test/ajax.php&full_headers=1&full_status=1";
 		   
 		$.getJSON( url, function(data){
 			var tr;
@@ -212,14 +198,27 @@ $(function(){
 					if(data["contents"][i].price.hotelPromoPrice!="")
 					{
 					if (typeof(data["contents"][i].price.hotelPromoPrice)!== 'undefined')
+					{
 					
 					tr.append("<td>" + data["contents"][i].price.hotelPromoPrice + "</td>");
 					}
+					else
+					{
+					tr.append("<td> </td>");
+					}
+					}
+					
 					
 					if(data["contents"][i].price.hotelPromoDescription!="")
 					{
 					if (typeof(data["contents"][i].price.hotelPromoDescription)!== 'undefined')
+					{
 					tr.append("<td>" + data["contents"][i].price.hotelPromoDescription + "</td>");
+					}
+					else
+					{
+					tr.append("<td></td>");
+					}
 					}
 					
 					tr.append("<td>" + data["contents"][i].hotelStarUrl + "</td>");
@@ -293,58 +292,25 @@ lt. brown: #C4884F
 
 
 <form id="params" method="get" action="">
-
 <div id="slider-6"> Range</div>
+</br>
 <p>
-         <label for="slidevalue">Change:</label>
-         <input type="text" id="slidevalue" 
-            style="border:0; color:black;">
-      </p>
-
-  <div>
-    <label>
-      <b>Remote URL</b>
-      <input id="url" class="text" type="text" name="url" value="http://secure.searstravel.ca/interview-test/index.php">
-    </label>
-  </div>
-  <p id="sample">
- 
-  </p>
-  <div>
-    <label>
-      <input type="radio" name="mode" value="native" disabled="disabled">
-      Native <i>(disabled by default)</i>
-    </label>
-  </div>
- 
-  <div class="dependent-mode dependent-mode-json indent">
-    <div>
-      <label>
-        <input type="checkbox" name="full_headers" value="1" checked="checked">
-        Full Headers
-      </label>
-    </div>
-    <div>
-      <label>
-        <input type="checkbox" name="full_status" value="1" checked="checked" >
-        Full Status
-      </label>
-    </div>
-  </div>
-  <input class="submit" type="submit" name="submit" value="Submit" val>
+         <label for="slidevalue">Change: </label>   <input type="text" id="slidevalue"   style="border:0; color:black;" />
+		 </br>
+		   <input class="submit" type="submit" name="submit" value="Show All Results" val>
+</p>
 </form>
 
 
 </div> 
- 
 
-<h3>The code</h3>
 <table>
 <th>Hotel Name</th>
 <th>HotelPrice</th>
-<th>Hotel StarRatingUrl</th>
 <th>HotelPromoPrice</th>
 <th>HotelPromoDescription</th>
+<th>Hotel StarRatingUrl</th>
+
 </table>
 
 
